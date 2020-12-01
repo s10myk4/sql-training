@@ -26,31 +26,58 @@
 # Define table sources here. See the Table API & SQL documentation for details.
 
 tables:
+  - name: Messages
+    type: source
+    update-mode: append
+    schema:
+      - name: id
+        type: LONG
+      - name: userId
+        type: LONG
+      - name: body
+        type: LONG
+    connector:
+      property-version: 1
+      type: kafka
+      version: universal
+      topic: Messages
+      startup-mode: earliest-offset
+      properties:
+        - key: zookeeper.connect
+          value: zookeeper:2181
+        - key: bootstrap.servers
+          value: kafka:9092
+        - key: group.id
+          value: testGroup
+    format:
+      property-version: 1
+      type: json
+      schema: "ROW(id LONG, userId LONG, body LONG)"
   - name: Rides
     type: source
     update-mode: append
     schema:
-    - name: rideId
-      type: LONG
-    - name: taxiId
-      type: LONG
-    - name: isStart
-      type: BOOLEAN
-    - name: lon
-      type: FLOAT
-    - name: lat
-      type: FLOAT
-    - name: rideTime
-      type: TIMESTAMP
-      rowtime:
-        timestamps:
-          type: "from-field"
-          from: "eventTime"
-        watermarks:
-          type: "periodic-bounded"
-          delay: "60000"
-    - name: psgCnt
-      type: INT
+      - name: rideId
+        type: LONG
+      - name: taxiId
+        type: LONG
+      - name: isStart
+        type: BOOLEAN
+      - name: lon
+        type: FLOAT
+      - name: lat
+        type: FLOAT
+      - name: rideTime
+        type: TIMESTAMP
+        rowtime:
+          timestamps:
+            type: "from-field"
+            from: "eventTime"
+          watermarks:
+            type: "periodic-bounded"
+            delay: "60000"
+      - name: psgCnt
+        type: INT
     connector:
       property-version: 1
       type: kafka
@@ -58,12 +85,12 @@ tables:
       topic: Rides
       startup-mode: earliest-offset
       properties:
-      - key: zookeeper.connect
-        value: zookeeper:2181
-      - key: bootstrap.servers
-        value: kafka:9092
-      - key: group.id
-        value: testGroup
+        - key: zookeeper.connect
+          value: zookeeper:2181
+        - key: bootstrap.servers
+          value: kafka:9092
+        - key: group.id
+          value: testGroup
     format:
       property-version: 1
       type: json
@@ -72,25 +99,25 @@ tables:
     type: source
     update-mode: append
     schema:
-    - name: rideId
-      type: LONG
-    - name: payTime
-      type: TIMESTAMP
-      rowtime:
-        timestamps:
-          type: "from-field"
-          from: "eventTime"
-        watermarks:
-          type: "periodic-bounded"
-          delay: "60000"
-    - name: payMethod
-      type: STRING
-    - name: tip
-      type: FLOAT
-    - name: toll
-      type: FLOAT
-    - name: fare
-      type: FLOAT
+      - name: rideId
+        type: LONG
+      - name: payTime
+        type: TIMESTAMP
+        rowtime:
+          timestamps:
+            type: "from-field"
+            from: "eventTime"
+          watermarks:
+            type: "periodic-bounded"
+            delay: "60000"
+      - name: payMethod
+        type: STRING
+      - name: tip
+        type: FLOAT
+      - name: toll
+        type: FLOAT
+      - name: fare
+        type: FLOAT
     connector:
       property-version: 1
       type: kafka
@@ -98,12 +125,12 @@ tables:
       topic: Fares
       startup-mode: earliest-offset
       properties:
-      - key: zookeeper.connect
-        value: zookeeper:2181
-      - key: bootstrap.servers
-        value: kafka:9092
-      - key: group.id
-        value: testGroup
+        - key: zookeeper.connect
+          value: zookeeper:2181
+        - key: bootstrap.servers
+          value: kafka:9092
+        - key: group.id
+          value: testGroup
     format:
       property-version: 1
       type: json
@@ -112,19 +139,19 @@ tables:
     type: source
     update-mode: append
     schema:
-    - name: taxiId
-      type: LONG
-    - name: driverId
-      type: LONG
-    - name: usageStartTime
-      type: TIMESTAMP
-      rowtime:
-        timestamps:
-          type: "from-field"
-          from: "eventTime"
-        watermarks:
-          type: "periodic-bounded"
-          delay: "60000"
+      - name: taxiId
+        type: LONG
+      - name: driverId
+        type: LONG
+      - name: usageStartTime
+        type: TIMESTAMP
+        rowtime:
+          timestamps:
+            type: "from-field"
+            from: "eventTime"
+          watermarks:
+            type: "periodic-bounded"
+            delay: "60000"
     connector:
       property-version: 1
       type: kafka
@@ -132,12 +159,12 @@ tables:
       topic: DriverChanges
       startup-mode: earliest-offset
       properties:
-      - key: zookeeper.connect
-        value: zookeeper:2181
-      - key: bootstrap.servers
-        value: kafka:9092
-      - key: group.id
-        value: testGroup
+        - key: zookeeper.connect
+          value: zookeeper:2181
+        - key: bootstrap.servers
+          value: kafka:9092
+        - key: group.id
+          value: testGroup
     format:
       property-version: 1
       type: json
@@ -149,15 +176,15 @@ tables:
     time-attribute: usageStartTime
 
 functions:
-- name: isInNYC
-  from: class
-  class: com.ververica.sql_training.udfs.IsInNYC
-- name: toAreaId
-  from: class
-  class: com.ververica.sql_training.udfs.ToAreaId
-- name: toCoords
-  from: class
-  class: com.ververica.sql_training.udfs.ToCoords
+  - name: isInNYC
+    from: class
+    class: com.ververica.sql_training.udfs.IsInNYC
+  - name: toAreaId
+    from: class
+    class: com.ververica.sql_training.udfs.ToAreaId
+  - name: toCoords
+    from: class
+    class: com.ververica.sql_training.udfs.ToCoords
 
 #==============================================================================
 # Execution properties

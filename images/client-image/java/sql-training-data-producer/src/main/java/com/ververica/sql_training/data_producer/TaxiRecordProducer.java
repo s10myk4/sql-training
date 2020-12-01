@@ -111,12 +111,12 @@ public class TaxiRecordProducer {
         Thread driverChangesFeeder = new Thread(new TaxiRecordFeeder(driverChangeSupplier, new Delayer(speedup), driverChangeConsumer));
 
         // start emitting data
-        ridesFeeder.start();
+        //ridesFeeder.start();
         faresFeeder.start();
         driverChangesFeeder.start();
 
         // wait for threads to complete
-        ridesFeeder.join();
+        //ridesFeeder.join();
         faresFeeder.join();
         driverChangesFeeder.join();
     }
