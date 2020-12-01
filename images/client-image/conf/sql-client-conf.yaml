@@ -1,4 +1,3 @@
-{"messageId":1,"accountId":1,"roomId":1,"content":"test","sequenceNo":1,"createdAt":1}
 tables:
   - name: Messages
     type: source
@@ -33,6 +32,12 @@ tables:
       property-version: 1
       type: json
       schema: "ROW(messageId LONG, accountId LONG, roomId LONG, content VARCHAR, sequenceNo LONG, createdAt LONG)"
+  - name: MessagesView
+    type: view
+    query: >
+      select roomId,messageId,last_value(content)
+      from Messages
+      group by roomId,messageId
   - name: Rides
     type: source
     update-mode: append
