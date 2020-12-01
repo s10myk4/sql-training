@@ -33,6 +33,7 @@ tables:
       type: json
       schema: "ROW(messageId LONG, accountId LONG, roomId LONG, content VARCHAR, sequenceNo LONG, createdAt LONG)"
   - name: MessagesView
+    #https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/sqlClient.html#sql-views
     type: view
     query: >
       select roomId,messageId,last_value(content)
