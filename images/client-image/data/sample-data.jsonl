@@ -1,0 +1,2 @@
+{"messageId":1,"accountId":1,"roomId":1,"content":"test","sequenceNo":1,"createdAt":1}
+{"messageId":2,"accountId":2,"roomId":1,"content":"test-updated","sequenceNo":2,"createdAt":3}

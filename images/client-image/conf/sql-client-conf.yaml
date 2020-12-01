@@ -1,14 +1,21 @@
+{"messageId":1,"accountId":1,"roomId":1,"content":"test","sequenceNo":1,"createdAt":1}
 tables:
   - name: Messages
     type: source
     update-mode: append
     schema:
-      - name: id
+      - name: messageId
         type: LONG
-      - name: userId
+      - name: accountId
         type: LONG
-      - name: body
+      - name: roomId
+        type: LONG
+      - name: content
         type: VARCHAR
+      - name: sequenceNo
+        type: LONG
+      - name: createdAt
+        type: LONG
     connector:
       property-version: 1
       type: kafka
@@ -25,7 +32,7 @@ tables:
     format:
       property-version: 1
       type: json
-      schema: "ROW(id LONG, userId LONG, body VARCHAR)"
+      schema: "ROW(messageId LONG, accountId LONG, roomId LONG, content VARCHAR, sequenceNo LONG, createdAt LONG)"
   - name: Rides
     type: source
     update-mode: append
