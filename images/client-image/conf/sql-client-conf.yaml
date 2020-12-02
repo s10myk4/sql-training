@@ -32,13 +32,43 @@ tables:
       property-version: 1
       type: json
       schema: "ROW(messageId LONG, accountId LONG, roomId LONG, content VARCHAR, sequenceNo LONG, createdAt LONG)"
+
+  - name: Accounts
+    type: source
+    update-mode: append
+    schema:
+      - name: accountId
+        type: LONG
+      - name: accountName
+        type: VARCHAR
+      - name: sequenceNo
+        type: LONG
+    connector:
+      property-version: 1
+      type: kafka
+      version: universal
+      topic: Accounts
+      startup-mode: earliest-offset
+      properties:
+        - key: zookeeper.connect
+          value: zookeeper:2181
+        - key: bootstrap.servers
+          value: kafka:9092
+        - key: group.id
+          value: testGroup
+    format:
+      property-version: 1
+      type: json
+      schema: "ROW(accountId LONG, accountName VARCHAR, sequenceNo LONG)"
+
   - name: MessagesView
     #https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/sqlClient.html#sql-views
     type: view
     query: >
-      select roomId,messageId,last_value(content)
-      from Messages
-      group by roomId,messageId
+      select m.roomId, last_value(a.accountName), m.messageId, last_value(m.content), max(m.sequenceNo)
+      from Messages as m inner join Accounts as a
+      on m.accountId = a.accountId
+      group by m.roomId, m.messageId
 
   - name: SequenceNoPerRoomView
     type: view

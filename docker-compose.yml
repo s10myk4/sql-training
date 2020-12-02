@@ -51,7 +51,7 @@ services:
       KAFKA_ADVERTISED_PORT: "9092"
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "Messages:1:1, Rides:1:1"
+      KAFKA_CREATE_TOPICS: "Messages:1:1, Accounts:1:1, Rides:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   mysql:
