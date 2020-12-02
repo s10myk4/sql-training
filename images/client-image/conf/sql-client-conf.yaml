@@ -70,13 +70,6 @@ tables:
       on m.accountId = a.accountId
       group by m.roomId, m.messageId
 
-  - name: SequenceNoPerRoomView
-    type: view
-    query: >
-      select roomId, last_value(sequenceNo)
-      from Messages
-      group by roomId
-
   - name: Rides
     type: source
     update-mode: append
