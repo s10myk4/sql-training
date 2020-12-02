@@ -120,18 +120,6 @@ tables:
       type: json
       schema: "ROW(rideId LONG, isStart BOOLEAN, eventTime TIMESTAMP, lon FLOAT, lat FLOAT, psgCnt INT, taxiId LONG)"
 
-
-functions:
-  - name: isInNYC
-    from: class
-    class: com.ververica.sql_training.udfs.IsInNYC
-  - name: toAreaId
-    from: class
-    class: com.ververica.sql_training.udfs.ToAreaId
-  - name: toCoords
-    from: class
-    class: com.ververica.sql_training.udfs.ToCoords
-
 #==============================================================================
 # Execution properties
 #==============================================================================
