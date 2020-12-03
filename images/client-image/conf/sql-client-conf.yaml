@@ -65,7 +65,7 @@ tables:
     #https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/sqlClient.html#sql-views
     type: view
     query: >
-      select m.roomId, last_value(a.accountName), m.messageId, last_value(m.content), max(m.sequenceNo)
+      select m.roomId, last_value(a.accountName) as accountName, m.messageId, last_value(m.content) as content, max(m.sequenceNo) as sequenceNo
       from Messages as m inner join Accounts as a
       on m.accountId = a.accountId
       group by m.roomId, m.messageId
